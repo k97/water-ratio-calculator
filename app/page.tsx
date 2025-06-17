@@ -8,7 +8,11 @@ import AppHeader from "../components/AppHeader";
 import Calculator from "../components/Calculator";
 import CookingResults from "../components/CookingResults";
 import AppFooter from "../components/AppFooter";
+import LoadingAnimation from "../components/LoadingAnimation";
 import { trackIngredientSelection, trackCalculation, trackMeasurementToggle } from "../lib/analytics";
+
+// Loading fallback component
+const PageLoader = () => <LoadingAnimation isGlobal={true} />;
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -22,10 +26,12 @@ function HomeContent() {
     "cupSize"
   );
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Ensure client-side hydration
   useEffect(() => {
     setIsClient(true);
+    setIsLoading(false); // No delay, show content immediately
   }, []);
 
   // Load ingredient from URL on mount
@@ -127,6 +133,11 @@ function HomeContent() {
     });
   };
 
+  // If still loading, show the loading animation
+  if (isLoading) {
+    return <LoadingAnimation isGlobal={true} forceShow={true} />;
+  }
+
   return (
     <Box
       sx={{
@@ -188,7 +199,7 @@ function HomeContent() {
 
 export default function Home() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<PageLoader />}>
       <HomeContent />
     </Suspense>
   );
