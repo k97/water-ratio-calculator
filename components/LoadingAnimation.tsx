@@ -14,15 +14,15 @@ const bounce = keyframes`
   }
 `;
 
-// Define a rotation animation for additional effect (optional)
-const rotate = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
+// Define a rotation animation for additional effect (commented out as currently unused)
+// const rotate = keyframes`
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// `;
 
 interface LoadingAnimationProps {
   size?: number;
