@@ -91,6 +91,21 @@ export const ingredients: Ingredient[] = [
     ]
   },
   {
+    id: 'yellow-lentils',
+    name: 'Yellow Lentils',
+    type: 'Lentil',
+    waterRatio: 2,
+    servingSize: 1,
+    servingUnit: 'Cup',
+    cookingTime: 20, // Cook for 20-25 minutes
+    instructions: [
+      'Rinse yellow lentils (moong dal) thoroughly under cold water.',
+      'Combine 1 cup of yellow lentils with 2 cups of water or broth in a saucepan.',
+      'Bring to a boil, then reduce heat to low, cover, and simmer for 20-25 minutes, until soft but not mushy.',
+      'Stir occasionally to prevent sticking. Yellow lentils have a mild, slightly sweet flavor.'
+    ]
+  },
+  {
     id: 'green-lentils',
     name: 'Green Lentils',
     type: 'Lentil',
