@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Water Ratio Calculator PWA
+
+A progressive web app that helps you calculate the perfect water-to-coffee ratio for brewing different types of coffee.
+
+## Features
+
+- Mobile-first design
+- PWA support for offline usage
+- Water-to-coffee ratio calculator
+- Material Design UI
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## PWA Icons
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app includes a base SVG icon for the PWA in `public/icons/icon-base.svg`. To generate all the required icon sizes, run:
 
-## Learn More
+```bash
+./generate-icons.sh
+```
 
-To learn more about Next.js, take a look at the following resources:
+This requires ImageMagick to be installed on your system. If you don't have it, install it with:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# macOS
+brew install imagemagick
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Ubuntu/Debian
+sudo apt-get install imagemagick
+```
 
-## Deploy on Vercel
+## Versioning
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app version is displayed in the UI and is managed through the `version` field in `package.json`. When releasing updates, bump the version according to semantic versioning principles.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Built With
+
+- [Next.js](https://nextjs.org/) - The React framework
+- [Material-UI](https://mui.com/) - UI component library
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
