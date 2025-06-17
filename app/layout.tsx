@@ -19,8 +19,8 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: "Simple Cooking Calculator",
-  description: "A simple cooking ratio calculator progressive web app",
+  title: "Simple Water Ratio Calculator for Cooking",
+  description: "A simple water ratio calculator for cooking various ingredients like rice, pasta, and more. Easily adjust portions and cup sizes.",
   manifest: "/manifest.json",
   icons: [
     { rel: "icon", url: "/icons/icon-base.svg", type: "image/svg+xml" },
