@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, IconButton } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import pkg from '../package.json';
+import { trackNavigationClick } from '../lib/analytics';
 
 const AppFooter: React.FC = () => {
   const pathname = usePathname();
-  const isAboutPage = pathname === '/about';
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Prevent hydration mismatch by not rendering pathname-dependent content on server
+  const isAboutPage = isClient ? pathname === '/info' : false;
   
   return (
     <Box sx={{
@@ -20,7 +28,11 @@ const AppFooter: React.FC = () => {
         pt: 2,
         px: 2
         }}>
-      <Link href={isAboutPage ? "/" : "/about"} style={{ textDecoration: 'none' }}>
+      <Link 
+        href={isAboutPage ? "/" : "/info"} 
+        style={{ textDecoration: 'none' }}
+        onClick={() => trackNavigationClick(isAboutPage ? 'home' : 'info')}
+      >
         <Box sx={{ 
           display: 'flex', 
           alignItems: 'center',
@@ -33,12 +45,12 @@ const AppFooter: React.FC = () => {
             {isAboutPage ? <CalculateIcon /> : <InfoOutlinedIcon />}
           </IconButton>
           <Typography variant="body2">
-            {isAboutPage ? 'Calculator' : 'About'}
+            {isAboutPage ? 'Calculator' : 'Info'}
           </Typography>
         </Box>
       </Link>
       
-      <Typography variant="caption" color="text.secondary">
+      <Typography variant="body2" color="text.secondary">
         Experimental Build v{pkg.version}
       </Typography>
     </Box>

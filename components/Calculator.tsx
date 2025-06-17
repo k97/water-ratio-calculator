@@ -227,6 +227,7 @@ const Calculator: React.FC<CalculatorProps> = ({
                 color: '#555',
                 fontWeight: 500,
                 fontSize: '1.05rem',
+                whiteSpace: 'nowrap',
               }}>
                 {measurementMode === 'cupSize' ? 'Cup Size' : 'Portion'}
               </Typography>

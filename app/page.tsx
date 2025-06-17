@@ -8,6 +8,7 @@ import AppHeader from "../components/AppHeader";
 import Calculator from "../components/Calculator";
 import CookingResults from "../components/CookingResults";
 import AppFooter from "../components/AppFooter";
+import { trackIngredientSelection, trackCalculation, trackMeasurementToggle } from "../lib/analytics";
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -20,9 +21,17 @@ function HomeContent() {
   const [measurementMode, setMeasurementMode] = useState<"portion" | "cupSize">(
     "cupSize"
   );
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure client-side hydration
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Load ingredient from URL on mount
   useEffect(() => {
+    if (!isClient) return;
+    
     const ingredientParam = searchParams.get("ingredient");
     if (ingredientParam) {
       const ingredient = ingredients.find((ing) => ing.id === ingredientParam);
@@ -30,7 +39,7 @@ function HomeContent() {
         setSelectedIngredient(ingredient);
       }
     }
-  }, [searchParams]);
+  }, [searchParams, isClient]);
 
   // Update URL when ingredient changes
   const updateURL = (ingredientId: string | null) => {
@@ -55,32 +64,67 @@ function HomeContent() {
       if (selected) {
         setSelectedIngredient(selected);
         updateURL(selected.id);
+        // Track ingredient selection
+        trackIngredientSelection(selected.name);
       }
     }
   };
 
   const handlePortionIncrease = () => {
-    setPortions((prev) => prev + 1);
+    setPortions((prev) => {
+      const newValue = prev + 1;
+      // Track calculation change
+      if (selectedIngredient) {
+        trackCalculation(selectedIngredient.name, newValue, cupSize, measurementMode);
+      }
+      return newValue;
+    });
   };
 
   const handlePortionDecrease = () => {
     if (portions > 1) {
-      setPortions((prev) => prev - 1);
+      setPortions((prev) => {
+        const newValue = prev - 1;
+        // Track calculation change
+        if (selectedIngredient) {
+          trackCalculation(selectedIngredient.name, newValue, cupSize, measurementMode);
+        }
+        return newValue;
+      });
     }
   };
 
   const handleCupSizeIncrease = () => {
-    setCupSize((prev) => prev + 0.5);
+    setCupSize((prev) => {
+      const newValue = prev + 0.5;
+      // Track calculation change
+      if (selectedIngredient) {
+        trackCalculation(selectedIngredient.name, portions, newValue, measurementMode);
+      }
+      return newValue;
+    });
   };
 
   const handleCupSizeDecrease = () => {
     if (cupSize > 0.5) {
-      setCupSize((prev) => prev - 0.5);
+      setCupSize((prev) => {
+        const newValue = prev - 0.5;
+        // Track calculation change
+        if (selectedIngredient) {
+          trackCalculation(selectedIngredient.name, portions, newValue, measurementMode);
+        }
+        return newValue;
+      });
     }
   };
 
   const handleMeasurementToggle = () => {
-    setMeasurementMode((prev) => (prev === "portion" ? "cupSize" : "portion"));
+    setMeasurementMode((prev) => {
+      const newMode = prev === "portion" ? "cupSize" : "portion";
+      // Track measurement mode toggle
+      trackMeasurementToggle(newMode);
+      return newMode;
+    });
   };
 
   return (

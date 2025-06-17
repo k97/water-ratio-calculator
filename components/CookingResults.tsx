@@ -50,6 +50,7 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
         borderRadius: 8,
         mb: 2,
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        
       }}
     >
       <Typography variant="h6" sx={{ 
@@ -69,6 +70,10 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
             display: 'flex', 
             mb: 3, 
             textAlign: 'left',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: 2,
+            py:0.15
              }}>
           <Box 
             sx={{ 
@@ -77,7 +82,6 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
               borderRadius: 1,
               display: 'flex',
               alignItems: 'center',
-              mr: 2,
               color: '#C9C9C9',
               fontWeight: 800,
               fontFamily: '--apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Barlow, Helvetica, Arial, sans-serif',
@@ -88,7 +92,6 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
             {index + 1}
           </Box>
           <Typography variant="body1" sx={{
-            pt: 1,
             fontSize: '1.125rem',
             color: '#484848',
             }}>

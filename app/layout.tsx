@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "./globals.css";
 import ThemeRegistry from "./theme-registry";
 
@@ -21,6 +22,12 @@ export const metadata: Metadata = {
   title: "Simple Cooking Calculator",
   description: "A simple cooking ratio calculator progressive web app",
   manifest: "/manifest.json",
+  icons: [
+    { rel: "icon", url: "/icons/icon-base.svg", type: "image/svg+xml" },
+    { rel: "icon", url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+    { rel: "icon", url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    { rel: "apple-touch-icon", url: "/icons/icon-192x192.png", sizes: "192x192" },
+  ],
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -39,6 +46,7 @@ export default function RootLayout({
         className={`${barlow.variable} antialiased`}
       >
         <ThemeRegistry>{children}</ThemeRegistry>
+        <GoogleAnalytics gaId="G-WD85HGNBFM" />
       </body>
     </html>
   );
