@@ -1,12 +1,25 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme as useMuiTheme } from '@mui/material';
+import { useTheme } from '../lib/theme-context';
 
 const AppHeader: React.FC = () => {
+  const muiTheme = useMuiTheme();
+  const { theme } = useTheme();
+  const [isMounted, setIsMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  // Use a safe default during server-rendering and initial client render
+  const isDarkMode = isMounted ? theme === 'dark' : false;
+  
   return (
     <Box sx={{ 
       display: 'flex',
       flexDirection: 'column',
       mb: 2,
+      color: isDarkMode ? '#ffffff' : 'inherit',
     }}>
       <Box 
         component="div" 
@@ -18,7 +31,7 @@ const AppHeader: React.FC = () => {
           justifyContent: 'center',
           borderRadius: '50%',
           mt: 15,
-          backgroundImage: `url('/star.svg')`,
+          backgroundImage: isDarkMode ? `url('/star-dark.svg')` : `url('/star.svg')`,
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
@@ -36,13 +49,21 @@ const AppHeader: React.FC = () => {
           }
         }}
       >
-        <Box sx={{ fontSize: '2.25rem', zIndex: 1, position: 'relative' }}>👨‍🍳⏱️</Box>
+        <Box sx={{ 
+          fontSize: '2.25rem', 
+          zIndex: 1, 
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1
+        }}>👨‍🍳⏱️</Box>
       </Box>
       <Typography variant="h3" component="h1" sx={{ 
         fontSize: '2.5rem',
         letterSpacing: '-0.03em', 
         fontWeight: 1000, 
-        color: '#3e2723', 
+        color: isDarkMode ? '#FED9FE' : '#3e2723', 
         fontFamily: '--apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
         fontStretch: 'expanded',
         lineHeight: 1.1,

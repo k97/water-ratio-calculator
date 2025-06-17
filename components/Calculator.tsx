@@ -1,9 +1,10 @@
 import React from 'react';
-import { Paper, Box, Typography, Button, NativeSelect, ButtonBase } from '@mui/material';
+import { Paper, Box, Typography, Button, NativeSelect, ButtonBase, useTheme as useMuiTheme } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { ingredients, Ingredient } from '../data/ingredients';
+import { useTheme } from '../lib/theme-context';
 
 interface CalculatorProps {
   selectedIngredient: Ingredient | null;
@@ -30,6 +31,17 @@ const Calculator: React.FC<CalculatorProps> = ({
   onCupSizeDecrease,
   onMeasurementToggle
 }) => {
+  const muiTheme = useMuiTheme();
+  const { theme } = useTheme();
+  const [isMounted, setIsMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  // Use a safe default during server-rendering
+  const isDarkMode = isMounted ? theme === 'dark' : false;
+  
   return (
     <Box>
       {/* Ingredient Selection */}
@@ -39,12 +51,13 @@ const Calculator: React.FC<CalculatorProps> = ({
           p: 3, 
           borderRadius: 8, 
           mb: 3, 
-          backgroundColor: '#FFFCFF',
+          backgroundColor: isDarkMode ? '#FFC4FF' : '#FFFCFF',
+          color: isDarkMode ? '#3F204D' : '#812AC7',
           boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
           position: 'relative',
           cursor: 'pointer',
           '&:hover': {
-            backgroundColor: '#FAEAFF',
+            backgroundColor: isDarkMode ? '#FFC4FF' : '#FAEAFF',
           }
         }}
       >
@@ -57,7 +70,7 @@ const Calculator: React.FC<CalculatorProps> = ({
         }}>
           <Typography variant="h4" sx={{ 
             fontWeight: 700, 
-            color: selectedIngredient ? '#3e2723' : '#9e9e9e',
+          color: isDarkMode ? '#3F204D' : '#82755A',
             fontSize: '1.60rem',
             letterSpacing: '-0.25px'
           }}>
@@ -177,16 +190,15 @@ const Calculator: React.FC<CalculatorProps> = ({
               width: 120,
               height: 80,
               borderRadius: 8,
-              backgroundColor: '#FFFCFF',
-              color: '#812AC7',
+              backgroundColor: isDarkMode ? '#FFC4FF' : '#FFFCFF',
+              color: isDarkMode ? '#3F204D' : '#812AC7',
               fontSize: '2rem',
               boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
               '&:hover': {
-                backgroundColor: '#f8f9fa',
+                backgroundColor: isDarkMode ? '#FFC4FF' : '#f8f9fa',
                 boxShadow: '0 6px 25px rgba(0,0,0,0.12)'
               },
               '&:disabled': {
-                
                 opacity: 0.5,
                 cursor: 'not-allowed'
               }
@@ -210,7 +222,7 @@ const Calculator: React.FC<CalculatorProps> = ({
               px: 3,
             }}>
               <Typography variant="h5" sx={{ 
-                color: '#3e2723',
+                color: isDarkMode ? '#ffffff' : '#3e2723',
                 fontWeight: 600,
                 fontSize: '1.5rem',
                 letterSpacing: '-0.06em',
@@ -224,7 +236,7 @@ const Calculator: React.FC<CalculatorProps> = ({
                 
               </Typography>
               <Typography variant="h6" sx={{ 
-                color: '#555',
+                color: isDarkMode ? '#e0e0e0' : '#555',
                 fontWeight: 500,
                 fontSize: '1.05rem',
                 whiteSpace: 'nowrap',
@@ -241,12 +253,12 @@ const Calculator: React.FC<CalculatorProps> = ({
               width: 120,
               height: 80,
               borderRadius: 8,
-              backgroundColor: '#FFFCFF',
-              color: '#812AC7',
+              backgroundColor: isDarkMode ? '#FFC4FF' : '#FFFCFF',
+              color: isDarkMode ? '#3F204D' : '#812AC7',
               fontSize: '2rem',
               boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
               '&:hover': {
-                backgroundColor: '#f8f9fa',
+                backgroundColor: isDarkMode ? '#FFC4FF' : '#f8f9fa',
                 boxShadow: '0 6px 25px rgba(0,0,0,0.12)'
               }
             }}

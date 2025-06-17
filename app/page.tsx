@@ -2,13 +2,15 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Container, Box } from "@mui/material";
+import { Container, Box, useTheme as useMuiTheme } from "@mui/material";
+import { useTheme } from "../lib/theme-context";
 import { ingredients, Ingredient } from "../data/ingredients";
 import AppHeader from "../components/AppHeader";
 import Calculator from "../components/Calculator";
 import CookingResults from "../components/CookingResults";
 import AppFooter from "../components/AppFooter";
 import LoadingAnimation from "../components/LoadingAnimation";
+import ThemeApplier from "../components/ThemeApplier";
 import { trackIngredientSelection, trackCalculation, trackMeasurementToggle } from "../lib/analytics";
 
 // Loading fallback component
@@ -17,6 +19,8 @@ const PageLoader = () => <LoadingAnimation isGlobal={true} />;
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const muiTheme = useMuiTheme();
+  const { theme } = useTheme();
 
   const [selectedIngredient, setSelectedIngredient] =
     useState<Ingredient | null>(null);
@@ -153,7 +157,7 @@ function HomeContent() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#FED9FE",
+          backgroundColor: theme === 'dark' ? '#402d4c' : "#FED9FE",
           borderRadius: 8,
           p: 2,
         }}

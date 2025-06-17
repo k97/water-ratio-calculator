@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Container, Typography, Paper, Box, Button } from '@mui/material';
+import { Container, Typography, Paper, Box, Button, useTheme } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import Link from 'next/link';
 import AppFooter from '../../components/AppFooter';
 import { trackNavigationClick } from '../../lib/analytics';
 
 export default function About() {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -23,7 +24,7 @@ export default function About() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#FED9FE",
+          backgroundColor: theme.palette.mode === 'dark' ? '#402d4c' : "#FED9FE",
           borderRadius: 8,
           p: 2,
         }}
@@ -44,7 +45,7 @@ export default function About() {
               justifyContent: 'center',
               borderRadius: '50%',
               mt: 15,
-              backgroundImage: `url('/star.svg')`,
+              backgroundImage: theme.palette.mode === 'dark' ? `url('/star-dark.svg')` : `url('/star.svg')`,
               backgroundSize: 'contain',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
@@ -68,10 +69,10 @@ export default function About() {
             fontSize: '2.5rem',
             letterSpacing: '-0.03em', 
             fontWeight: 1000, 
-            color: '#3e2723', 
             fontFamily: '--apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
             fontStretch: 'expanded',
             lineHeight: 1.1,
+            color: theme.palette.mode === 'dark' ? '#FED9FE' : '#3e2723', 
             mb: 1
           }}>
             Info
@@ -85,12 +86,12 @@ export default function About() {
             p: 3,
             borderRadius: 8,
             mb: 2,
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            backgroundColor: theme.palette.mode === 'dark' ? '#311a48' : 'rgba(255, 255, 255, 0.9)',
           }}
         >
           <Typography variant="body1" sx={{
             fontSize: '1.125rem',
-            color: '#484848',
+            color: theme.palette.mode === 'dark' ? '#F9F9F9' : '#484848',
             lineHeight: 1.6,
             mb: 2
           }}>
@@ -100,7 +101,7 @@ export default function About() {
 
           <Typography variant="body1" sx={{
             fontSize: '1.125rem',
-            color: '#484848',
+            color: theme.palette.mode === 'dark' ? '#F9F9F9' : '#484848',
             lineHeight: 1.6,
             mb: 2
           }}>
@@ -110,7 +111,7 @@ export default function About() {
 
           <Typography variant="body1" sx={{
             fontSize: '1.125rem',
-            color: '#484848',
+            color: theme.palette.mode === 'dark' ? '#F9F9F9' : '#484848',
             lineHeight: 1.6,
             mt: 2,
             mb: 2
@@ -124,7 +125,7 @@ export default function About() {
 
           <Typography variant="body1" sx={{
             fontSize: '1.125rem',
-            color: '#484848',
+            color: theme.palette.mode === 'dark' ? '#F9F9F9' : '#484848',
             lineHeight: 1.6,
           }}>
             <strong>Report any issues or adding simple ingredients here:</strong>

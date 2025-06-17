@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import React from "react";
 import "./globals.css";
 import ThemeRegistry from "./theme-registry";
 
@@ -19,8 +20,8 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: "Simple Cooking Calculator",
-  description: "A simple cooking ratio calculator progressive web app",
+  title: "Simple Water Ratio Calculator",
+  description: "A simple water ratio calculator progressive web app",
   manifest: "/manifest.json",
   icons: [
     { rel: "icon", url: "/icons/icon-base.svg", type: "image/svg+xml" },
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Cooking Calc"
+    title: "Water Ratio Calc"
   },
 };
 
@@ -41,12 +42,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head />
       <body
         className={`${barlow.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <ThemeRegistry>{children}</ThemeRegistry>
-        <GoogleAnalytics gaId="G-WD85HGNBFM" />
+        <ThemeRegistry>
+          {children}
+        </ThemeRegistry>
+        <GoogleAnalytics gaId="G-0TE5K3WSRG" />
       </body>
     </html>
   );

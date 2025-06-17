@@ -1,5 +1,6 @@
 import React from 'react';
-import { Paper, Box, Typography } from '@mui/material';
+import { Paper, Box, Typography, useTheme as useMuiTheme } from '@mui/material';
+import { useTheme } from '../lib/theme-context';
 
 interface ResultCardProps {
   title: string;
@@ -16,20 +17,35 @@ const ResultCard: React.FC<ResultCardProps> = ({
   value, 
   unit, 
   subValue, 
-  backgroundColor = '#EEAEFF' 
-}) => (
+  backgroundColor = '#EEAEFF'
+}) => {
+  // Use theme context to get current theme
+  const { theme } = useTheme();
+  const [isMounted, setIsMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  // Default to light during SSR to prevent hydration mismatch
+  const isDarkMode = isMounted ? theme === 'dark' : false;
+  
+  // Use dark mode color if in dark mode
+  const bgColor = isDarkMode ? '#501F6B' : backgroundColor;
+  
+  return (
   <Paper 
     elevation={0} 
     sx={{ 
       p: 3,
       borderRadius: 8,
       mb: 2,
-      backgroundColor,
+      backgroundColor: bgColor,
       minHeight: '100px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-            color: '#551374'
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      color: isDarkMode ? '#ffffff' : '#551374'
     }}
   >
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -74,5 +90,6 @@ const ResultCard: React.FC<ResultCardProps> = ({
     </Box>
   </Paper>
 );
+}
 
 export default ResultCard;

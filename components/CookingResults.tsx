@@ -1,7 +1,8 @@
 import React from 'react';
-import { Paper, Box, Typography } from '@mui/material';
+import { Paper, Box, Typography, useTheme as useMuiTheme } from '@mui/material';
 import { Ingredient } from '../data/ingredients';
 import ResultCard from './ResultCard';
+import { useTheme } from '../lib/theme-context';
 
 interface CookingResultsProps {
   ingredient: Ingredient;
@@ -11,6 +12,16 @@ interface CookingResultsProps {
 }
 
 const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, cupSize, measurementMode }) => {
+  const { theme } = useTheme();
+  const [isMounted, setIsMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  // Default to light during SSR to prevent hydration mismatch
+  const isDarkMode = isMounted ? theme === 'dark' : false;
+  
   // Calculate the total amount based on measurement mode
   const totalAmount = measurementMode === 'portion' 
     ? ingredient.servingSize * portions 
@@ -48,14 +59,13 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
       sx={{ 
         p: 3,
         borderRadius: 8,
+        backgroundColor: isDarkMode ? '#3F1C57' : 'rgba(255, 255, 255, 0.9)',
         mb: 2,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        
       }}
     >
       <Typography variant="h6" sx={{ 
         mb: 2, 
-        color: '#854F92',
+        color: isDarkMode ? '#ffffff' : '#854F92',
         fontWeight: 800,
         fontFamily: '--apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Barlow, Helvetica, Arial, sans-serif',
         fontSize: '1.25rem',
@@ -82,7 +92,7 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
               borderRadius: 1,
               display: 'flex',
               alignItems: 'center',
-              color: '#C9C9C9',
+              color: isDarkMode ? '#9e4fb7' : '#C9C9C9',
               fontWeight: 800,
               fontFamily: '--apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Barlow, Helvetica, Arial, sans-serif',
                 fontSize: '2.25rem',
@@ -93,7 +103,7 @@ const CookingResults: React.FC<CookingResultsProps> = ({ ingredient, portions, c
           </Box>
           <Typography variant="body1" sx={{
             fontSize: '1.125rem',
-            color: '#484848',
+            color: isDarkMode ? '#e0e0e0' : '#484848',
             }}>
             {instruction}
           </Typography>
