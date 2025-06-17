@@ -46,7 +46,7 @@ export default function RootLayout({
         className={`${barlow.variable} antialiased`}
       >
         <ThemeRegistry>{children}</ThemeRegistry>
-        <GoogleAnalytics gaId="G-WD85HGNBFM" />
+        <GoogleAnalytics gaId="G-0TE5K3WSRG" />
       </body>
     </html>
   );
